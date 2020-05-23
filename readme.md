@@ -1,4 +1,4 @@
-<h1>mangento2-custom-logout-redirect</h1>
+<h1>magento2-custom-logout-redirect</h1>
 <p>Compatible with magento 2.3.*</p>
 
 <h2>Installtion</h2>
