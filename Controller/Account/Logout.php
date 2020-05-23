@@ -14,6 +14,7 @@ use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
 use Magento\Framework\Stdlib\Cookie\PhpCookieManager;
 use Magento\Customer\Controller\AbstractAccount;
+use Elite\RedirectLogout\Helper\Data as HelperData;
 
 /**
  * Sign out a customer.
@@ -24,6 +25,7 @@ class Logout extends AbstractAccount implements HttpGetActionInterface, HttpPost
      * @var Session
      */
     protected $session;
+    protected $helperData;
 
     /**
      * @var CookieMetadataFactory
@@ -38,12 +40,15 @@ class Logout extends AbstractAccount implements HttpGetActionInterface, HttpPost
     /**
      * @param Context $context
      * @param Session $customerSession
+     * @param HelperData $helperData
      */
     public function __construct(
         Context $context,
-        Session $customerSession
+        Session $customerSession,
+        HelperData $helperData
     ) {
         $this->session = $customerSession;
+        $this->helperData = $helperData;
         parent::__construct($context);
     }
 
@@ -93,8 +98,25 @@ class Logout extends AbstractAccount implements HttpGetActionInterface, HttpPost
 
         /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
-        // redirect to same page
-        $resultRedirect->setPath($this->_redirect->getRefererUrl());
+
+        /** get enabled | not enabled value from backend & url value */
+
+        $enabled = $this->helperData->getGeneralConfig('enable');
+        $url = stripslashes($this->helperData->getGeneralConfig('url'));
+        $url = str_replace('/',' ', $url);
+        $url = trim($url);
+
+        /** @var  $objectManager */
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+        $baseUrl = $storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
+
+        /** Concat url with base url */
+        $url = $baseUrl.$url;
+
+        /** if module is enabled redirect to path else redirect to default magento path */
+        ($enabled == 1) ? $resultRedirect->setPath($url) : $resultRedirect->setPath('*/*/logoutSuccess');
+
         return $resultRedirect;
     }
 }
