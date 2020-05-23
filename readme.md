@@ -9,3 +9,11 @@
 	<li>php bin/magento setup:upgrade</li>
 	<li>php bin/magento setup:di:compile</li>
 </ol>
+
+<h2>Configuration</h2>
+<ol>
+    <li>Navigate to: Stores -> Configuration</li>
+    <li><img src="web/media/configuration.png"></li>
+    <li>Redirect URL: Set the path you want to redirect after logout</li>
+</ol>
+
