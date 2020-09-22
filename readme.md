@@ -4,10 +4,10 @@
 <h2>Installation</h2>
 <ol>
 	<li>Create Elite/RedirectLogout inside your app/code folder to your magento installtion</li>
-	<li>git clone https://github.com/Emil1997/magento2-custom-logout-redirect.git inside /app/code/Elite/RedirectLogout directory</li>
-	<li>php bin/magento module:enable Elite_RedirectLogout</li>
-	<li>php bin/magento setup:upgrade</li>
-	<li>php bin/magento setup:di:compile</li>
+	<li><pre>git clone https://github.com/Emil1997/magento2-custom-logout-redirect.git inside /app/code/Elite/RedirectLogout directory</pre></li>
+	<li><pre>php bin/magento module:enable Elite_RedirectLogout</pre></li>
+	<li><pre>php bin/magento setup:upgrade</pre></li>
+	<li><pre>php bin/magento setup:di:compile</pre></li>
 </ol>
 
 <h2>Configuration</h2>
